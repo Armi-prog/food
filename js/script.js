@@ -89,4 +89,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     setTimer(".timer", deadline);
+    
+//modal start
+
+const modalOpenTriggers = document.querySelectorAll("[data-modal-open]");
+const modalCloseTrigger = document.querySelector("[data-modal-close]");
+const modal = document.querySelector(".modal");
+
+function hideModal() {
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+    document.body.style.overflowY = "auto";
+};
+
+function showModal() {
+    modal.classList.remove("hide");
+    modal.classList.add("show");
+    document.body.style.overflowY = "hidden";
+    clearTimeout(modalTimerID);
+};
+
+modalOpenTriggers.forEach(btn => {
+    btn.addEventListener("click", showModal);
+});
+
+modalCloseTrigger.addEventListener("click", hideModal);
+
+modal.addEventListener("click", (e) => {
+    if (e.target && e.target === modal) hideModal();
+});
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.matches(".show")) hideModal();
+});
+
+const modalTimerID = setTimeout(showModal, 5000);
+
+function showModalByScroll() {
+    if (window.scrollY + document.documentElement.clientHeight <= documentElement.clientHeight) {
+        showModal();
+        window.removeEventListener("scroll", showModalByScroll);
+    }
+}
+
+window.addEventListener("scroll", showModalByScroll);
+
+//modal end
 });
