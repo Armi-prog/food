@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // tabs end
 
     // timer start
-    const deadline = "2024-09-25";
+    const deadline = "2024-11-25";
 
     const setZero = n => n >= 0 && n < 10 ? `0${n}` : n;
     
@@ -135,4 +135,56 @@ function showModalByScroll() {
 window.addEventListener("scroll", showModalByScroll);
 
 //modal end
+
+
+//slider start
+
+const slides = document.querySelectorAll(".offer__slide");
+const prev = document.querySelector(".offer__slider-prev");
+const next = document.querySelector(".offer__slider-next");
+const total = document.querySelector("#total");
+const current = document.querySelector("#current");
+
+
+let slideIndex = 1;
+
+showSlides(slideIndex);
+
+if (slides.length < 10) {
+    total.textContent = `0${slides.length}`;   
+} else {
+    total.textContent = slides.length;
+
+};
+
+function showSlides(i = 0) {
+   if (i > slides.length) {
+    slideIndex = 1;
+   }
+
+  if (i < 1) {
+    slideIndex = slides.length;
+    }  
+    
+    slides.forEach(slide => slide.style.display = "none");
+    slides[slideIndex - 1].style.display = "block";  
+    
+    if (slides.length < 10) {
+        current.textContent = `0${slideIndex}`;   
+    } else {
+        current.textContent = slideIndex;
+    
+    }
+}
+
+function changeSlideIndex(i) {
+    showSlides(slideIndex += i);
+}
+
+prev.addEventListener("click", () => changeSlideIndex(-1));
+next.addEventListener("click", () => changeSlideIndex(1));
+
+
+//slider end
+
 });
